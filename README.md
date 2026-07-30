@@ -89,6 +89,91 @@ export default {
 
 Each endpoint needs its own distinct `url`, or `pooling: true` on every endpoint sharing one.
 
+## Examples
+
+### Use your own domain instead of the default dev domain
+
+Requires a domain reserved on your ngrok account (paid plans) — you can't just make up a
+hostname. Three ways to point at it, in order of precedence:
+
+**Env var** — quickest, no file needed:
+```
+NGROK_DOMAIN=myapp.ngrok.app npx @ngrok/nextjs dev
+```
+Or put it in `.env.local`. Accepts a bare domain (auto-prefixed to `https://`) or a full URL.
+
+**`ngrok.config.local.ts`** — gitignored, personal-only, persists across runs without
+re-exporting an env var every time:
+```ts
+export default {
+  url: "https://myapp.ngrok.app",
+};
+```
+
+**`ngrok.config.ts`** — committed, shared with the team. Only makes sense here if the domain
+is meant for whoever's running the tool at the time, not concurrently by multiple people — see
+[Personal overrides](#personal-overrides) for why.
+```ts
+export default {
+  url: "https://myapp.ngrok.app",
+};
+```
+
+Editing any of these takes effect the next time you run `npx @ngrok/nextjs dev` — no rebuild
+step, just restart it.
+
+### Traffic Policy examples
+
+`trafficPolicy` is a raw [ngrok Traffic Policy](https://ngrok.com/docs/traffic-policy/)
+document (YAML or JSON) in `ngrok.config.ts`, applied to the endpoint as-is. A few common ones:
+
+**Basic auth** (already shown above):
+```ts
+export default {
+  trafficPolicy: `
+on_http_request:
+  - actions:
+      - type: basic-auth
+        config:
+          credentials:
+            - "user:password123"
+`,
+};
+```
+
+**IP allowlist** — only your office/VPN can reach the tunnel:
+```ts
+export default {
+  trafficPolicy: `
+on_http_request:
+  - actions:
+      - type: restrict-ips
+        config:
+          enforce: true
+          allow:
+            - "203.0.113.0/24"
+`,
+};
+```
+
+**Webhook signature verification** — let ngrok validate inbound webhook signatures before
+they reach your app:
+```ts
+export default {
+  trafficPolicy: `
+on_http_request:
+  - actions:
+      - type: verify-webhook
+        config:
+          provider: stripe
+          secret: "whsec_..."
+`,
+};
+```
+
+No terminating action needed in any of these — this is an agent endpoint forwarding to your
+local `next dev`, not a Cloud Endpoint, so a passing request just continues on to your app.
+
 ## Requirements
 
 - Node.js 18+
