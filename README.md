@@ -8,8 +8,7 @@ npx @ngrok/nextjs dev
 ```
 
 Built on [`@ngrok/ngrok`](https://www.npmjs.com/package/@ngrok/ngrok), ngrok's official
-JavaScript SDK — a native module, not a wrapper around a downloaded CLI binary. There's
-nothing to install besides this package.
+JavaScript SDK — a native module, and nothing to install besides this package.
 
 ## Setup
 
@@ -25,8 +24,7 @@ nothing to install besides this package.
    npx @ngrok/nextjs dev
    ```
 
-That's it. You'll get a public URL bound to your ngrok account's dev domain — permanent, so
-you only need to register it with OAuth/webhook providers once, ever.
+You'll get a public URL bound to your ngrok account's dev domain.
 
 ## What it does
 
@@ -69,9 +67,7 @@ on_http_request:
 
 ### Personal overrides
 
-Two ways to override the shared config without editing a committed file — needed because a
-specific reserved domain is exclusive; if it's hardcoded into `ngrok.config.ts`, the second
-teammate to run this on the same day gets a conflict instead of a tunnel:
+Two ways to override the shared config without editing a committed file:
 
 - `NGROK_DOMAIN` env var (bare domain or full URL)
 - `ngrok.config.local.ts` — same shape as `ngrok.config.ts`, gitignore it
@@ -79,7 +75,7 @@ teammate to run this on the same day gets a conflict instead of a tunnel:
 Resolution order: `NGROK_DOMAIN` → `ngrok.config.local.ts` → `ngrok.config.ts` → account
 default dev domain.
 
-### Multiple endpoints (paid plans)
+### Multiple endpoints
 
 ```ts
 export default {
