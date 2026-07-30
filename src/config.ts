@@ -28,6 +28,12 @@ export interface HttpEndpointOptions {
   // manipulation, webhook verification, and everything else at the edge.
   // See https://ngrok.com/docs/traffic-policy/.
   trafficPolicy?: string;
+  // Ingress configuration — kept as a standalone field despite the
+  // trafficPolicy-only decision above, because it isn't an Edge Module and
+  // has no Traffic Policy equivalent (confirmed by checking ngrok's actions
+  // reference directly): "Forward Internal" routes traffic *to* an internal
+  // endpoint, it doesn't declare *this* endpoint as internal/public/k8s.
+  binding?: "public" | "internal" | "kubernetes";
 }
 
 export interface EndpointConfig extends HttpEndpointOptions {

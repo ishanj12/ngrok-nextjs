@@ -67,6 +67,7 @@ function buildListener(session: Session, entry: EndpointConfig) {
 
   if (entry.pooling) builder.poolingEnabled(true);
   if (entry.trafficPolicy) builder.trafficPolicy(entry.trafficPolicy);
+  if (entry.binding) builder.binding(entry.binding);
   return builder;
 }
 

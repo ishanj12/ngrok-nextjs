@@ -211,7 +211,7 @@ that was the riskiest and least necessary part of the earlier design.
 ### The full config surface: deliberately small
 
 Root-level fields (or per-entry in `endpoints[]` for the multi-endpoint case) are just:
-`upstream`, `url`, `pooling`, `env.url`, and `trafficPolicy`. That's it.
+`upstream`, `url`, `pooling`, `env.url`, `trafficPolicy`, and `binding`. That's it.
 
 - `upstream` — a bare port number (forwarded to as `http://localhost:<port>`), or a raw
   address string accepted by the SDK's own `listenAndForward()` — `"localhost:4000"`, a full
@@ -232,6 +232,14 @@ Root-level fields (or per-entry in `endpoints[]` for the multi-endpoint case) ar
   - Omit `url` entirely to fall back to the account's default dev domain as an HTTP(S)
     endpoint — matches the original zero-config behavior. If provided, it must include a
     scheme or the wrapper throws immediately rather than silently guessing one.
+- `binding` — `"public" | "internal" | "kubernetes"`, ngrok's ingress configuration. Also kept
+  standalone despite the trafficPolicy-only decision, for the same reason `url`'s scheme
+  inference exists: checked ngrok's Traffic Policy actions reference directly, and there's no
+  equivalent there either — "Forward Internal" routes traffic *to* an internal endpoint, it
+  doesn't declare *this* endpoint internal. Confirmed live that `binding: "internal"` has a
+  real, enforced constraint: ngrok itself rejects it unless `url` ends in `.internal`
+  (`ERR_NGROK_9029`) — a clear, specific error, not a silent failure, so no extra guard needed
+  on our side beyond documenting it.
 
 ngrok's `HttpListenerBuilder` in the JS SDK also exposes ~15 more granular fields —
 `oauth`, `basicAuth`, `allowCidr`/`denyCidr`, `requestHeader`/`responseHeader`, `circuitBreaker`,
