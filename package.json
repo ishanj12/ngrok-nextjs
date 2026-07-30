@@ -2,6 +2,7 @@
   "name": "@ngrok/nextjs",
   "version": "0.0.1",
   "description": "Run next dev with a public ngrok URL, no separate binary or config required.",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "ngrok-nextjs": "./dist/cli.js"

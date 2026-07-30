@@ -108,3 +108,7 @@ pnpm test         # runs the unit test suite
 See [`examples/test-app`](examples/test-app) for a working Next.js app to test against, and
 [`DESIGN.md`](DESIGN.md) for the design rationale and everything confirmed empirically along
 the way.
+
+## License
+
+[MIT](LICENSE)
