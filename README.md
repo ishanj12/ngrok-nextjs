@@ -39,8 +39,7 @@ You'll get a public URL bound to your ngrok account's dev domain.
 
 ## Config
 
-Optional `ngrok.config.ts` (or `.js`/`.mjs`) in your project root. Safe to commit — it holds
-no secrets, just intent:
+Optional `ngrok.config.ts` (or `.js`/`.mjs`) in your project root. 
 
 ```ts
 export default {
