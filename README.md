@@ -1,8 +1,6 @@
 # @ngrok/nextjs
 
-Run `next dev` with a public ngrok URL, in one command — no separate binary, no manual
-`ngrok http 3000` in a second terminal.
-
+Run `next dev` with a public ngrok URL, in one command.
 ```
 npx @ngrok/nextjs dev
 ```
@@ -30,7 +28,7 @@ You'll get a public URL bound to your ngrok account's dev domain.
 
 - Spawns `next dev` and opens an ngrok tunnel to it as one process, so stopping it
   (`Ctrl+C`) cleanly tears down both — including `next dev`'s own child processes.
-- Defaults to your account's dev domain (`abc123.ngrok-free.dev`), no config needed.
+- Defaults to your account's dev domain (`abc123.ngrok-free.dev`).
 - Syncs the tunnel URL into `.env.local` under `NEXTAUTH_URL` and `NEXT_PUBLIC_APP_URL` by
   default, so auth libraries and client code pick it up automatically.
 - Prints a QR code so you can open the tunnel on your phone. Disable with `NGROK_QR=false`.
@@ -118,8 +116,7 @@ export default {
 };
 ```
 
-Editing any of these takes effect the next time you run `npx @ngrok/nextjs dev` — no rebuild
-step, just restart it.
+Editing any of these takes effect the next time you run `npx @ngrok/nextjs dev`.
 
 ### Traffic Policy examples
 
@@ -170,13 +167,10 @@ on_http_request:
 };
 ```
 
-No terminating action needed in any of these — this is an agent endpoint forwarding to your
-local `next dev`, not a Cloud Endpoint, so a passing request just continues on to your app.
-
 ## Requirements
 
 - Node.js 18+
-- An ngrok account (free tier works) and authtoken — required on every plan, no exceptions.
+- An ngrok account and authtoken.
 
 ## Development
 
