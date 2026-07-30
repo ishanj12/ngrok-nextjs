@@ -12,7 +12,7 @@ JavaScript SDK — a native module, and nothing to install besides this package.
 
 ## Setup
 
-1. Sign up free at [ngrok.com](https://ngrok.com) and grab an authtoken from
+1. Sign up at [ngrok.com](https://ngrok.com) and grab an authtoken from
    [the dashboard](https://dashboard.ngrok.com/authtokens).
 2. Put it in `.env.local` in your Next.js project root:
    ```
@@ -63,7 +63,7 @@ on_http_request:
 | `pooling` | `boolean?` | Opt in to ngrok endpoint pooling so multiple endpoints can intentionally share one `url` with load-balanced routing. Required when two endpoints would otherwise collide on the same URL. |
 | `trafficPolicy` | `string?` | A raw [ngrok Traffic Policy](https://ngrok.com/docs/traffic-policy/) document (YAML or JSON) — the mechanism for auth, IP restrictions, header manipulation, webhook verification, and more. |
 | `env.url` | `string[]?` | Which env vars in `.env.local` get this endpoint's URL. |
-| `binding` | `"public" \| "internal" \| "kubernetes"?` | Ingress configuration. Not part of Traffic Policy — checked directly against ngrok's actions reference, there's no equivalent action, so this stays a standalone field. `"internal"` requires `url` to end in `.internal`, enforced by ngrok itself (`ERR_NGROK_9029` if it doesn't). |
+| `binding` | `"public" \| "internal" \| "kubernetes"?` | Ingress configuration. |
 | `endpoints` | `EndpointConfig[]?` | Paid-plan multi-endpoint case — front more than one local service from a single command. Supersedes the root-level fields above entirely. Each entry also takes `upstream` (a port number or raw address string) alongside `url`/`pooling`/`trafficPolicy`/`env`/`binding`. |
 
 ### Personal overrides
