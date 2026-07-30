@@ -16,7 +16,6 @@ JavaScript SDK — a native module, and nothing to install besides this package.
    ```
    NGROK_AUTHTOKEN=your_token_here
    ```
-   (Never commit this file — it's gitignored by `create-next-app` by default.)
 3. Run it:
    ```
    npx @ngrok/nextjs dev
